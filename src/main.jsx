@@ -6,6 +6,11 @@ import App from './App.jsx'
 import './index.css'
 import {DoctorRouter,PharmacyMainPage,TestLabMainPage,PatientRouter} from './components/User/Registered'
 import TestLabRouter from "./components/User/Registered/TestLab/TestLabRouter.jsx"
+import Register from "./components/LoginRegister/Register.jsx"
+import { Provider } from "react-redux"
+import store from './state/store.jsx'
+import { ToastContainer } from "react-toastify"
+import 'react-toastify/dist/ReactToastify.css'; 
 const router = createBrowserRouter(
   [
     {
@@ -32,6 +37,10 @@ const router = createBrowserRouter(
         {
           path:"testlab/*",
           element:<TestLabRouter/>
+        },
+        {
+          path:"register",
+          element:<Register/>
         }
       ]
     }
@@ -39,5 +48,9 @@ const router = createBrowserRouter(
 )
 
 createRoot(document.getElementById('root')).render(
-  <RouterProvider router={router}/>
+  <Provider store={store}>
+    <ToastContainer/>
+    <RouterProvider router={router}/>
+  </Provider>
+  
 )
