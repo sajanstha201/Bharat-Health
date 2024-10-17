@@ -4,7 +4,7 @@ export const userInfoSlice = createSlice({
     name: 'user_information',
     initialState: {
         id: 1,
-        first_name: '',
+        first_name: 'sajan',
         middle_name: '',
         last_name: '',
         age: null,
@@ -17,8 +17,8 @@ export const userInfoSlice = createSlice({
         pin_code: null,
         gmail: '',
         phone_no: '',
-        token: 'Token cdbb5f77-03f1-4e5f-8d80-56e8eac20138',
-        // token:'Token 1204012234234ewf35'
+        // token: 'Token cdbb5f77-03f1-4e5f-8d80-56e8eac20138',
+        token:'Token 8c164cea-3e1a-49fa-bb88-1d969d14abf0'
     },
     reducers: {
         setUserDetail: (state, action) => {

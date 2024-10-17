@@ -23,7 +23,7 @@ export default function Appointment() {
   })
   return (
     <>
-    <div className='flex flex-wrap gap-10 p-5 items-center justify-center'>
+    <div className='flex flex-wrap gap-5 p-5 items-center justify-center px-[10%]'>
       {appointments.map((e,i)=>(<MyAppointmentCard appointmentDetail={e} key={i} fetchAppointment={fetchAppointment}/>))}
     </div>
     

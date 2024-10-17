@@ -10,7 +10,7 @@ export default function PatientMainPage(){
    const userInfo=useSelector(state=>state.userInfo)
    return(
       <div style={{fontFamily: 'miriam-libre'}} className="flex flex-row gap-3">
-         <div className="w-[80%] m-5">
+         <div className="w-full m-5 flex items-center justify-center flex-col">
             <TodayAppointment/>
             <StarredMedicalReport/>
             <Outlet />

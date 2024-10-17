@@ -4,16 +4,14 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-const MyAppointmentCard = ({ appointmentDetail,fetchAppointment }) => {
-    const navigate=useNavigate()
+const MyAppointmentCard = ({ appointmentDetail, fetchAppointment }) => {
+    const navigate = useNavigate();
     const baseUrl = useSelector(state => state.baseUrl).backend;
-    const userInfo = useSelector(state => state.userInfo); // Ensure userInfo is defined
+    const userInfo = useSelector(state => state.userInfo);
     const {
         appointment_id,
         appointment_date,
         appointment_time,
-        appointment_type,
-        appointment_status,
         doctor
     } = appointmentDetail;
 
@@ -25,19 +23,18 @@ const MyAppointmentCard = ({ appointmentDetail,fetchAppointment }) => {
         specialization
     } = doctor;
 
-    // Handling rescheduling
     const handleReschedule = () => {
-        navigate(`/patient/appointments/book?doctor=${JSON.stringify({doctor_id:doctor_id,specialization:specialization,image:baseUrl+profile_image,name:first_name+last_name})}`)
+        navigate(`/patient/appointments/book?doctor=${JSON.stringify({doctor_id: doctor_id, specialization: specialization, image: baseUrl + profile_image, name: first_name + last_name})}`);
     };
 
     const handleCancel = async () => {
         try {
             const deleteUrl = `${baseUrl}api/patient/appointments/${appointment_id}/`;
-            const response = await axios.delete(deleteUrl, {
-                headers: { 'Authorization': `${userInfo.token}` } // Include the token properly
+            await axios.delete(deleteUrl, {
+                headers: { 'Authorization': `${userInfo.token}` }
             });
             toast.success('Appointment cancelled successfully');
-            fetchAppointment()
+            fetchAppointment();
         } catch (error) {
             if (error.response) {
                 toast.error(`Error: ${error.response.data.detail || 'An error occurred'}`);
@@ -48,39 +45,41 @@ const MyAppointmentCard = ({ appointmentDetail,fetchAppointment }) => {
     };
 
     return (
-        <div className="max-w-md bg-white shadow-lg rounded-lg overflow-hidden my-4 flex items-center justify-center p-4">
-            <div className='h-full flex items-center justify-center overflow-hidden rounded-md'>
+        <div className="bg-white shadow-x-md overflow-hidden flex items-start p-6 w-full border-y">
+            {/* Profile Image */}
+            <div className='flex-shrink-0'>
                 <img 
-                    className="max-w-48 h-48 object-cover" 
+                    className="w-24 h-24 object-cover rounded-md" 
                     src={baseUrl + profile_image} 
                     alt={`${first_name} ${last_name}'s profile`} 
                 />
             </div>
 
-            <div className="p-4">
-                <h2 className="text-lg font-bold">{first_name} {last_name}</h2>
+            {/* Doctor Details */}
+            <div className="ml-6 flex-grow">
+                <h2 className="text-xl font-semibold text-gray-800">{`Dr. ${first_name} ${last_name}`}</h2>
                 <p className="text-gray-600">{specialization}</p>
-                <p className="text-gray-700 mt-2"><strong>Date:</strong> {appointment_date}</p>
-                <p className="text-gray-700"><strong>Time:</strong> {appointment_time}</p>
-                <p className="text-gray-700"><strong>Appointment Type:</strong> {appointment_type}</p>
-                <p className="text-gray-700"><strong>Status:</strong> {appointment_status}</p>
-                {appointment_status !== 'Completed' && (
-                    <div className="mt-4 flex justify-between gap-2">
-                        <button
-                            onClick={handleReschedule}
-                            className="bg-blue-500 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded"
-                        >
-                            Reschedule
-                        </button>
-                        <button
-                            onClick={handleCancel}
-                            className="bg-red-500 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded"
-                        >
-                            Cancel
-                        </button>
-                    </div>
-                )}
+                <p className="mt-2 text-sm text-gray-600">
+                    <strong>Date & Time:</strong> {appointment_date} | {appointment_time}
+                </p>
+
+                {/* Buttons */}
+
             </div>
+            <div className="mt-4 flex gap-4 flex-col">
+                    <button
+                        onClick={handleReschedule}
+                        className="border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded hover:bg-gray-100"
+                    >
+                        Reschedule
+                    </button>
+                    <button
+                        onClick={handleCancel}
+                        className="border border-gray-300 text-gray-700 font-medium py-2 px-4 rounded hover:bg-gray-100"
+                    >
+                        Cancel appointment
+                    </button>
+                </div>
         </div>
     );
 };
