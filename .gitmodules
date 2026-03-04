@@ -1,0 +1,6 @@
+[submodule "Bharat-Health-Frontend"]
+	path = Bharat-Health-Frontend
+	url = https://github.com/sajanstha201/Bharat-Health-Frontend.git
+[submodule "Bharat-Health-Backend"]
+	path = Bharat-Health-Backend
+	url = https://github.com/sajanstha201/Bharat-Health-Backend.git
